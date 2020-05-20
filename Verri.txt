@@ -1,0 +1,210 @@
+C Pointers (sizeofpointer), functionpointer
+LinkedList Array
+Tree, 
+
+Systems Programming APU
+
+File 
+ZFS <read> <write> <transaction>
+System call Flow (Userspace to Kernel Space with VFS layer) ??
+ioctl flow example??
+Crash Utility    
+Debugging Skills (gdb and crash utility)
+
+Multithreading <synchronisation problems>,
+
+
+https://www.tldp.org/LDP/tlk/fs/filesystem.html
+https://www.kernel.org/doc/Documentation/filesystems/ext2.txt
+https://www.kernel.org/doc/Documentation/filesystems/vfs.txt
+https://www.embedded.com/introduction-to-the-volatile-keyword/
+https://devopedia.org/linux-signals
+
+fsck
+valgrind
+gdb
+async ios and sync ios ??
+process address space
+
+tree ? tree depth
+hash table? hash functions
+identify its a bst??
+queue and its types??
+
+spinlock?
+volatile? 
+
+sorting algorithms.
+binary search iterative + recursive
+
+
+
+Operating System:
+https://www.slideshare.net/EmertxeSlides/linux-internals-part-i
+https://www.slideshare.net/EmertxeSlides/linux-internals-part-ii ***
+https://www.slideshare.net/EmertxeSlides/linux-internals-part-iii <Threads>
+
+https://www.geeksforgeeks.org/benefits-of-multithreading-in-operating-system/
+https://www.thegeekstuff.com/2012/06/linux-shared-libraries/
+
+GDB
+backtrace full: Complete backtrace with local variables
+up, down, frame: Move through frames
+watch: Suspend the process when a certain condition is met
+set print pretty on: Prints out prettily formatted C source code
+set logging on: Log debugging session to show to others for support
+set print array on: Pretty array printing
+finish: Continue till end of function
+enable and disable: Enable/disable breakpoints
+tbreak: Break once, and then remove the breakpoint
+where: Line number currently being executed
+info locals: View all local variables
+info args: View all function arguments
+list: view source
+rbreak: break on function matching regular expression
+
+https://www.ostechnix.com/explaining-soft-link-and-hard-link-in-linux-with-examples/
+https://blogs.oracle.com/linux/8-gdb-tricks-you-should-know-v2
+https://www.thegeekstuff.com/2014/04/gdbserver-example/
+
+
+C/C++
+https://www.quantstart.com/articles/C-Virtual-Destructors-How-to-Avoid-Memory-Leaks/
+
+
+-----------------------13 May 2020---------------------------------
+int swap(int *a, int *b){
+	*a=*a+*b;
+	*b=*a-*b;
+	*a=*a-*b;
+}
+
+int swap_V2(int *a, int *b){
+	int temp=*a;
+	*a=*b;
+	*b=temp;
+}
+
+
+int SortArray(int *arr, int n) {
+	int i=0;
+	int j=0;
+	for (i=0;i<n;i++){
+		for (j=i+1;j<n;j++){
+			if ( arr[i] < arr[j] ) { 
+				swap(&arr[i], &arr[j]);
+			}
+		}
+	}	
+}
+
+
+
+//linear search
+int linearSearch(int *arr, int n, int key) {
+	int i=0;
+	for (i=0;i<n/2;i++){
+		if(arr[i]==key){
+			return i;
+		}
+		if(arr[n-i]==key){
+			return n-i;
+		}		
+	}	
+	return -1;
+}
+
+
+
+//linear search
+//binary search
+
+//bubble sort
+//merge sort
+//quick sort
+
+
+//abstract class 
+class Abstract {
+
+public:
+	virtual int show()=0;	
+	int number;
+	virtual ~Abstract();
+};
+
+//inherit from abstract class
+class Derive:public Abstract {
+public:
+	virtual int show();
+	int deriveNumber;
+	virtual ~Derive();
+};
+
+Abstract *ab=new Derive();
+delete ab;
+
+
+
+#search keys in set for files under ~/files/*.txt
+
+grep -i 'KEY1\|KEY2\|KEY3'  `ls ~/files/*.txt`
+
+sed '/KEY1/p;/KEY2/p;/KEY3/p' `ls ~/files/*.txt`
+
+
+
+recently I worked one interesting problem.
+
+our read ops were stuck, 
+
+
+that 
+
+
+
+Action Item?
+78354
+SharedPointer 
+
+
+//Most complex bug on which
+
+couple of months back worked on interesting customer field defect.
+
+1. What was the issue?
+	customer facing outage and support ticket.
+ 	
+2. Analysis:
+	
+	during log analysis noticed process hit the assertion which generated the dump, luckily we got coredump file form customer	
+
+	 alot read requests had timeout,  connection reset was happening continusly. 	
+
+	Started coredump analysis around socket connection and rpc requests and sockets, there were > 1000 sockets out of which > 800  
+	marked errored, ideally if socket marked error, it should be freed from memory. this is the reason new connection was not happening.
+
+	that means there is window in cleaning sockets which is not working as expected. 
+Root Cuase:
+	each socket connection have rpc requests and socket associated, basically its shared_pointer 
+
+	after processing read requests get enqueued to reply queue, but when I print all queue containt still there was alot many reuests were pending for draing response. basically this is the reason sockets were not cleaing up, if sockets gets cleanup, it will close the older connection and will create new one.
+
+	senq_ has rpcRequest ref_
+	rpcRequest has rpcConnection ref_
+	rpcConnection has rpcSocket ref_
+	
+Fix:
+     if socket is marked with error during sending reply, thread will drain all requests from reply queue, in short before fix there was limit how many request will get drained during each iternation, now were not keeping that limit if socket is marked with error.
+	
+
+Intro:
+	My name is Somnath Ghule, I am from tal-sangmner dist-Ahmednagar. I am an Electronics Engineering graduate, also i have done diploma course in embedded system design from pune university electronics department.
+
+	I have total of 7 years work experiance in application & system software programming using C/C++/Shell/Python/Linux. 
+
+	Domainwise I worked on settop box and storage domain.
+	I started working in Aeon Communication as C/C++ developer for set top box, then I joined IGate now Capgemini as C/C++/Linux develper where my actual storage domain work started, currently I am working in Msys Technologies.
+
+	Currently I am working in tintri filesystem maintence project, where my work role is to analyse & fix the defects reported by customer and internal testing team. Sometimes I contribute to feature development work as well.  
+
