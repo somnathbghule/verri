@@ -25,6 +25,27 @@ void list::reverseList() {
 	}
 	head_=prev;
 }
+void list::reverseListByNElements( List::node **head, int nElements ) {
+	DEBUG();
+	List::node *curr=*head;
+	List::node *next=NULL;
+	List::node *prev=NULL;
+	List::node *headTemp=*head;
+	int i=0;
+	while ( curr && i < nElements ){
+		next=curr->next_;
+		curr->next_=prev;
+		prev=curr;
+		curr=next;
+		i++;
+	}
+	*head=prev;
+
+	if ( curr ){
+		reverseListByNElements( &curr, nElements );
+		headTemp->next_=curr;
+	}
+}
 List::node *list::getNthNodeFromLast (int n) {
 	List::node *curr=head_;
 	int i=0;
@@ -92,10 +113,13 @@ void list_test() {
 	l->insert(30);
 	l->insert(40);
 	l->insert(50);
+	l->insert(60);
 	l->printList();
 	//l->reverseList();
 	//l->printList();
 	//cout<<"4: "<<l->getNthNodeFromLast(4)->data()<<endl;
-	cout<<"mid: "<<l->midOfList()->data()<<endl;
+	//cout<<"mid: "<<l->midOfList()->data()<<endl;
+	l->reverseListByNElements(&(l->head_), 2);
+	l->printList();
 	delete l;
 }

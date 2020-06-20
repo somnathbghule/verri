@@ -8,5 +8,5 @@ using namespace std;
 #include <list.h>
 #include <queue.h>
 #include <Ptr.h>
-#define RUN_TEST() (Ptr_test())
+#define RUN_TEST() (list_test())
 #endif

@@ -28,11 +28,13 @@ class list {
 		virtual ~list ();
 		virtual void insert(int data)=0;
 		void reverseList();
+		void reverseListByNElements( List::node **head,int nElements );
 		List::node * getNthNodeFromLast(int n);
 		List::node * midOfList();
 		void printList();
-	private:
 		List::node *head_;
+	private:
+		//List::node *head_;
 		List::node *tail_;
 		friend stack;
 		friend queue;
