@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+	
+	public:
+		Node ( Node *down=NULL, Node *next=NULL, int data ):down_(down), next_(next), data_(data) {
+		}
+	private:		
+		Node *down_;
+		Node *next_;
+		int data_;
+};
+
+void fillList (Node *head) {
+	Node *tail=new Node(NULL, NULL, 35);
+	Node *mid=new Node(NULL, tail, 25);
+	head=new Node(NULL, mid, 1);
+	
+}
+
+int main (int argc, char *argv) {
+	Node head;
+	fillList (&head);
+	//return (0);
+	return (0);
+}

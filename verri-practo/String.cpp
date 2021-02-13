@@ -46,3 +46,16 @@ char *String::Str() const {
 	strCount++;	
 	return buffer_;
 }
+void String::removeDuplicates() {
+	bool alpha[ 256 ]={ false };
+	int index=0;
+	int i=0;
+	for ( i=0; i< size_; i++ ){
+		if ( alpha[ buffer_[i] ] == false ) {
+			alpha[ buffer_[i] ] = true;
+			buffer_[ index++ ]=buffer_[ i ];
+		}
+	}
+	size_ = index;
+	buffer_[ index ] = '\0';
+}

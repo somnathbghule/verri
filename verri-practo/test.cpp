@@ -48,7 +48,7 @@ bool search(int mat[][MAX], int m, int n, int x)
 
    return false;
 }
-
+/*
 // driver program to test above function
 int main()
 {
@@ -64,6 +64,7 @@ int main()
       cout << "No";
   return 0;
 }
+*/
 /*
 int main(int arc, char **argv ){
 	

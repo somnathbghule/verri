@@ -17,6 +17,7 @@ class String {
 		String &operator=(const String &str);
 		char &operator[](int index);
 		char *Str() const;
+		void removeDuplicates();
 	private:
 		int size_;
 		char *buffer_;

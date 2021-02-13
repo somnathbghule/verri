@@ -268,8 +268,174 @@ Root Cuase:
 Reproduction:
 	wrote unit test to repro the issue.
 Fix:
-     if socket is marked with error during sending reply, thread will drain all requests from reply queue, in short before fix there was limit how many request will get drained during each iternation, now were not keeping that limit if socket is marked with error.
+     if socket is marked with error during sending reply, thread will drain all requests from reply queue, in short before fix there was limit how many request will get drained during each iternation, now we are not keeping that limit if socket is marked with error.
 	
 
 
 >> more 2000 patents
+
+
+ZORNT
+1. huge number factorial (c++/design patterns)
+2. search word from 2d character array
+3. ls command execution from userspace to kernel space
+4. how vectors are implemented.
+
+
+Verri 2 (Backup Exec)
+
+
+free & delete 
+new & malloc
+
+
+virtual table, virtual distructor
+
+thread
+mutex
+semaphore
+condtional variables
+timed mutex
+
+//singletone example
+
+class Config {
+	private:
+		static Config *mInstance;
+		Config() { refCount=0; }
+		~Config ();
+		int refCount
+		Mutex mutex;	
+	public:
+		static Config *getConfig() {
+			mutex.lock();
+			if ( mInstance == NULL )
+				mInstance = new Config();
+			refCount++;
+			mutex.unlock();
+			return mInstance;
+		}
+		
+		void show () {
+			cout <<"show !!!"<<endl;
+		}
+		operator &delete () {
+			mutex.lock();
+			refCount--;
+			if ( refCount == 0 ) {
+				free (mInstance);
+				mInstance=NULL;			
+			}
+			mutex.unlock();
+		}
+};
+
+
+Config *Config::mInstance=NULL;
+
+
+
+Application:
+
+	Config *refConf=Config::getConfig();
+	refConf->show();
+	//refConf = NULL;
+	delete  refConf;
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main (int argc, char *argv[])  {
+	
+	int fd[2];
+	char buffer[8];
+	int ret=pipe(fd);	
+	int fd=fork();
+	sem_t semWaitChild;
+	sem_init(semWaitChild, 0);	
+	if ( fd==0 ) { //child
+		sem_wait(&semWaitChild)				
+		read( fd[0], buffer, 8);
+	} else {
+		int status;
+		write(fd[1], "veritas", 8);
+		sem_post(&semWaitChild)
+		printf("buffer: %s\n", buffer);
+	}
+	//return 0
+	return (0);
+}
+
+
+
+
+1 2 3 3 2 1 
+
+1 revrse list 
+2 compare node by node
+
+
+//1. find mid of list
+
+//2 start compare from mid->next==head
+
+1 2 3 3 2 1
+
+bool isListPalindrome( node *head ) {
+	slowRef=head;
+	fastRef=head->next;
+	//find mid of list
+	while ( slowRef && fastRef && fastRef->next  ) {
+		slowRef=slowRef->next;
+		fastRef=fastRef->next->next;		
+	}
+	slowRef=3;	
+	//compare from first and mid->next
+	node *start=head;			
+	while ( slowRef ) {
+		if ( slowRef->data != start->data )
+			return false		
+		slowRef=slowRef->next;
+		start=start->next;
+	}
+	return true;
+}
+
+
+1->2->3->2->1
+3 mid slow=3
+1. find the mid
+2. m->next reverse til next
+3. comare till mid
+
+
+int arr[], float farr[] 
+
+#define NUMBER_OF_ELEMENTS(arr)  (sizeof(arr)/sizeof(arr[0]))
+
+
+//
+
+
+python .pyc generation
+
+critical issue reolved
+
+pipe implementation:
+	parent will write
+	child will read
+
+list package dependencies
+smart pointers: shared ptr and uniq ptr
+is list palindrome
+pthread_mutex_t mutex=PTHREAD_MUTEX_INITIALIZER
+number of array elements 
+
+https://blog.varunajayasiri.com/epoll.html
+memory managenment in python
+
+>>
+stack size:
+debug using gdb without debugging symbols (dissamble)
+https://www.hackerrank.com/challenges/encryption/problem

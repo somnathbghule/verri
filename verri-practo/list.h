@@ -2,7 +2,7 @@
 #define list_h
 #include <verri-practo.h>
 class list;
-class stack;
+class Stack;
 class queue;
 namespace List {
 	class node {
@@ -17,8 +17,10 @@ namespace List {
 			int data_;
 			node *next_;
 			friend list;
-			friend stack;
+			friend Stack;
 			friend queue;
+			//friend List::node *mergeSortedLists( List:: node *a, List::node *b);
+
 	};
 
 };
@@ -31,21 +33,25 @@ class list {
 		void reverseListByNElements( List::node **head,int nElements );
 		List::node * getNthNodeFromLast(int n);
 		List::node * midOfList();
+		void removeDuplicats();
+		bool isPalindrome();
+		bool isPalindromeV2();
 		void printList();
+		List::node *mergeSortedLists( List:: node *a, List::node *b);
 		List::node *head_;
 	private:
 		//List::node *head_;
 		List::node *tail_;
-		friend stack;
+		friend Stack;
 		friend queue;
 };
 
-class stack: public list {
+class Stack: public list {
 	public:
-		stack();
+		Stack();
 		void insert(int data);
-		//const char *type() { return "stack"; } does object slicing
-		~stack();
+		//const char *type() { return "Stack"; } does object slicing
+		~Stack();
 
 };
 class queue: public list {
